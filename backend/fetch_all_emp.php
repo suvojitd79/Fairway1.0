@@ -2,7 +2,7 @@
 
 session_start();
 
-$pdo = new PDO('mysql:host=107.180.50.162;dbname=fairPharmDB','fairPharmDBUser','h%XJQY-)J-E['); 
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
 
 $sql = "SELECT * FROM employee WHERE email!=:email";
 

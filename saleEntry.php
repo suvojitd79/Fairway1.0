@@ -1,54 +1,54 @@
 <?php
 
 
-// session_start();
+session_start();
 
 
-// if(!isset($_SESSION['login_id']))
-// {
+if(!isset($_SESSION['login_id']))
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();    
 
-// }
+}
 
-// $pdo = new PDO('mysql:host=107.180.50.162;dbname=fairPharmDB','fairPharmDBUser','h%XJQY-)J-E['); 
-
-
-// $sql="SELECT name from employee WHERE id=:id";
-
-// $sqlm=$pdo->prepare($sql);
-
-// $sqlm->execute(array('id'=>$_SESSION['login_id']));
-
-// $row=$sqlm->fetch();
-
-// $_SESSION['user_name']=$row['name'];
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
 
 
+$sql="SELECT name from employee WHERE id=:id";
 
-// if(isset($_SESSION['sale_error'])){
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
+
+
+
+if(isset($_SESSION['sale_error'])){
         
 
 
-//         if($_SESSION['sale_error']==1)
-//         {
+        if($_SESSION['sale_error']==1)
+        {
 
-//             echo "<script>alert('Warning!!!  All the fields must be filled');</script>";
+            echo "<script>alert('Warning!!!  All the fields must be filled');</script>";
 
-//         }
+        }
 
-//         if($_SESSION['sale_error']==0)
-//         {
+        if($_SESSION['sale_error']==0)
+        {
 
-//             echo "<script>alert('Data has been added!');</script>";
+            echo "<script>alert('Data has been added!');</script>";
 
-//         }
+        }
 
 
-//         unset($_SESSION['sale_error']);
+        unset($_SESSION['sale_error']);
 
-//     }
+    }
 
 
 ?>
@@ -64,6 +64,7 @@
     <link rel="stylesheet" href="./css/Material+Icons.css">
     <link rel="stylesheet" href="./css/material.indigo-pink.min.css">
     <script defer src="./js/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/material-design-iconic-font.min.css"/>
     <link rel="stylesheet" href="./css/components.css">
     <script src="./js/jquery.js"></script>
@@ -110,57 +111,62 @@
     
 
 
-    <form action="backend/sale_entry.php" method="POST">
+    <form method="POST" action="backend/sale_entry.php" onsubmit="return executeOnSubmit();">
     <div class="sale-form">
     
-    <div class="form-container">
+            <div class="form-container">
             <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text"  id="issueDate" name="fields1[]">
+                <input class="mdl-textfield__input" type="text"  id="issueDate" name="fields1" required>
                 <label class="mdl-textfield__label" for="issueDate">Date of Issue</label>
             </span> <br>
            
             <span class="mdl-textfield mdl-js-textfield">
                      <label for="">Stockist Name :</label>
-                    <select class="mdl-textfield__input" id="supplierName" name="x3">
+                    <select class="mdl-textfield__input" id="supp_name" name="fields2" value=" " required>
+
                     </select>
             </span> <br>
         </div> 
 
 
-            <div class="mdl-grid" id="danamic">
 
-                <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-phone">
+
+
+
+        <div class="mdl-grid" id="danamic">    
+
+           <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-phone">
                     <label for="">Medicine Name :</label>
-                    <select class="mdl-textfield__input" name="fields2[]">
-                        <option value="Rebose-20 (Tablets)">Rebose-20 (Tablets)</option>
-                        <option value="Rebose-L (Capsules)">Rebose-L (Capsules)</option>
-                        <option value="Rebose-D (Capsules)">Rebose-D (Capsules)</option>
-                        <option value="Rosek-Plus (Injection)">Rosek-Plus (Injection)</option>
-                        <option value="Rosek-200 ml (Syrup)">Rosek-200 ml (Syrup)</option>
-                        <option value="Skinax (Cream)">Skinax (Cream)</option>
+                    <select class="mdl-textfield__input" name="fields3[]" id="med_name" required>
                     </select>
                 </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                 <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="number" id="price" name="" placeholder="Price (&#8377;)">             
+            <input class="mdl-textfield__input" type="number" id="price" name="fields4[]" placeholder="Price (&#8377;)" required>             
                 </span>   
                 </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-phone" style="padding-bottom:10px;">
                     <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="number" id="receipt" placeholder="Receipt/Pur (Qty)"  name="fields3[]" onkeypress="return isNumber(event)" >
+                        <input class="mdl-textfield__input" type="number" id="receipt" placeholder="Receipt/Pur (Qty)"  name="fields5[]" onkeypress="return isNumber(event)" required>
                     </span> 
                 </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-phone">
                     <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="number" id="sale" placeholder="Issue / Sales (Qty)" name="">
+                        <input class="mdl-textfield__input" type="number" id="sale" placeholder="Issue / Sales (Qty)" name="fields6[]" required>
                     </span> 
                 </div>
-                    
+                   
+
+
+
+
+
+
             </div>   
          
         </div>  
        
-        <input type="submit" name="sale_entry" id="sale_entry" style="display: none;">
+       
 
         
 
@@ -174,26 +180,18 @@
        
         <div class="form-container">
                 <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" id="remarks" name="">
-                    <label class="mdl-textfield__label" for="remarks">Remarks</label>
+                    <input class="mdl-textfield__input" type="text" id="remarks" name="rem">
+                    <label class="mdl-textfield__label" for="remarks" name=" ">Remarks</label>
                 </span>
         <div>
     
-        <center>  <button onclick="saleSubmit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> Submit </button></center>
+   <!--      <center>  <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" > Submit </button></center> -->
+
+         <input  type="submit" name="sale_entry" id="sale_entry" style="display: block;" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
     
         </form>  
 
 
-<dialog class="mdl-dialog" id="sale-dialog">
-    <h4 class="my-dialog-title">Verify the Data before hit Enter</h4>
-    <div class="mdl-dialog__content">
-        Date of Sale :<p class="displayData" id="date-D"></p>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab close"><i class="material-icons">clear </i></button>                    
-        <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" id="store_data"><i class="material-icons">done_outline</i></button>
-     </div>
-</dialog>
 
 </div>
 </main>
@@ -201,7 +199,7 @@
 
          
             
-            <script src="js/user_entry.js"></script>
+            
   
   
 
@@ -215,34 +213,107 @@
 
 
 
-
+    <script src="js/user_entry.js"></script>
       <script type="text/javascript">
 
+        function executeOnSubmit()
+            {
+
+            var res = confirm("Do you want to submit the form contents?");
+
+            if(res)
+            return true;
+            else
+            return false;
+            }
 
 
 
-        $('#store_data').click(function(){
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        $(document).ready(function(){
 
 
-            $('#sale_entry').click();
+            
+
+            
+
+            
+            
+            
+
+
+
+            function fetch_med(){
+
+            $.ajax({
+
+                url:'backend/fetch_medicine.php',
+                method:'POST',
+                success:function(data)
+                    {
+
+                        $('#med_name').html(data);
+
+                    }
 
 
             });
 
+                }
+
+                fetch_med();
+
+
+
+            function fetch_supplier(){
+
+
+            $.ajax({
+
+                url:'backend/fetch_supplier.php',
+                method:'POST',
+                success:function(data)
+                    {
+
+                        $('#supp_name').html(data);
+
+                    }
+
+
+            });
+
+        }
+
+            fetch_supplier();
+
+            
+
+                // $('#med_name').change(function(){ 
+                    
+                //     var value = $(this).val();
+
+                //     alert(value);
+                // });
+
+                
+
+           
 
 
 
 
-function isNumber(evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    return true;
-}
 
 
+
+            });
 
 
 

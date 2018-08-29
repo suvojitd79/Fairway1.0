@@ -1,26 +1,36 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['login_id']))
-// {
+if(!isset($_SESSION['login_id']))
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// }
+}
 
-// $pdo = new PDO('mysql:host=107.180.50.162;dbname=fairPharmDB','fairPharmDBUser','h%XJQY-)J-E['); 
+if($_SESSION['designation']!='Medical Representative')
+{
 
-// $sql="SELECT name from employee WHERE id=:id";
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// $sqlm=$pdo->prepare($sql);
+}
 
-// $sqlm->execute(array('id'=>$_SESSION['login_id']));
 
-// $row=$sqlm->fetch();
 
-// $_SESSION['user_name']=$row['name'];
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
+
+$sql="SELECT name from employee WHERE id=:id";
+
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
 
 ?>
 
@@ -34,6 +44,7 @@
     <title>Fairway Pharmaceuticals | User Entry : Medical Representative - (M.R.) </title>
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./css/Material+Icons.css">
+    
     <link rel="stylesheet" href="./css/material.indigo-pink.min.css">
     <script defer src="./js/material.min.js"></script>
     <link rel="stylesheet" href="./css/material-design-iconic-font.min.css"/>
@@ -44,6 +55,8 @@
     
     <style type="text/css">
      
+
+
     html {
   box-sizing: border-box;
 }
@@ -114,8 +127,6 @@ transform: scale(1.008);
 }
 
 
-
-
     </style>
 
 
@@ -168,62 +179,47 @@ transform: scale(1.008);
 
 
  <script type="text/javascript">
+
+
+
+
     
-// $(document).ready(function(){
+$(document).ready(function(){
 
 
-//     fetch_offer();
+    fetch_offer();
 
 
-//         function fetch_offer(){
+        function fetch_offer(){
 
 
-//           $.ajax({
+          $.ajax({
 
 
-//             url:'backend/fetch_offer.php',
-//             method:'POST',
-//             success:function(data){
+            url:'backend/offer.php',
+            method:'POST',
+            success:function(data){
 
-//                 $('#offer_content').html(data);
-
-
-//                 }
+                $('#offer_content').html(data);
 
 
-//                })  
+                }
 
 
-//                 }
-
-//         setInterval(function(){fetch_offer();},1000);        
+               })  
 
 
+                }
 
-// fetch_offer1();
-
-//       function fetch_offer1(){
-
-
-//           $.ajax({
-
-//                 url:'backend/fetch_offer1.php',
-//                 method:'POST',
-//                 success:function(data){
-
-//                     $('#offer_content1').html(data);  
-
-//                     }
-
-//                  })
-
-//               }
+        setInterval(function(){fetch_offer();},1000);        
 
 
-//       setInterval(function(){fetch_offer1();},1000);       
 
 
-//                 });
+                });
+
+
+
 
  </script>
 

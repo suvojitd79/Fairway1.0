@@ -41,7 +41,27 @@ document.getElementById("issueDate").value = today;
 
 
 
-// Travel Data submit funtion
+// // Travel Data submit funtion
+// function travelDataSubmit(){
+//     var dialog = document.querySelector('dialog');
+//     dialog.showModal();
+//     if (! dialog.showModal) {
+//         dialogPolyfill.registerDialog(dialog);
+//       };
+//     dialog.querySelector('.close').addEventListener('click', function() {
+//         dialog.close()});
+    
+//     document.getElementById('showTravelDate').innerHTML = document.getElementById("issueDate").value;
+//     document.getElementById('showFrom').innerHTML = document.getElementById("from").value;     
+//     document.getElementById('showTo').innerHTML = document.getElementById("to").value;     
+//     document.getElementById('showDistance').innerHTML = document.getElementById("distance").value;
+//     document.getElementById('showOffice').innerHTML = document.querySelector('input[name="office"]:checked').value;
+//     var total = document.getElementById('TA').value + document.getElementById('DA').value;
+//     document.getElementById('showTotal').innerHTML = total;
+//     document.getElementById('showRemarks').innerHTML = document.getElementById("remarks").value;     
+
+// };
+    
 function travelDataSubmit(){
     var dialog = document.querySelector('dialog');
     dialog.showModal();
@@ -51,17 +71,31 @@ function travelDataSubmit(){
     dialog.querySelector('.close').addEventListener('click', function() {
         dialog.close()});
     
+    var distance = document.getElementById("distance").value;
+    var fare = document.getElementById('fare').value;
+    var TA = (fare*distance);
+    var DA = document.getElementById('DA').value;
+    var total = ( TA + DA );
+    
     document.getElementById('showTravelDate').innerHTML = document.getElementById("issueDate").value;
     document.getElementById('showFrom').innerHTML = document.getElementById("from").value;     
     document.getElementById('showTo').innerHTML = document.getElementById("to").value;     
-    document.getElementById('showDistance').innerHTML = document.getElementById("distance").value;
     document.getElementById('showOffice').innerHTML = document.querySelector('input[name="office"]:checked').value;
-    var total = document.getElementById('TA').value + document.getElementById('DA').value;
-    document.getElementById('showTotal').innerHTML = total;
+    document.getElementById('showDistance').innerHTML = document.getElementById("distance").value;
+    document.getElementById('showTotal').innerHTML = "<p>"+total+"</p>";
     document.getElementById('showRemarks').innerHTML = document.getElementById("remarks").value;     
-
+    // console.log("TA is : "+ TA);
+    // console.log("DA is : "+ DA);
+    // console.log ("Total is : " + total);
 };
-    
+
+
+
+
+
+
+
+
 // code for verification of SALE Data 
 
 function saleSubmit(){

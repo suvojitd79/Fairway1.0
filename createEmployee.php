@@ -1,55 +1,61 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['login_id']) || !isset($_SESSION['designation']) || $_SESSION['designation']!='admin')
-// {
+if(!isset($_SESSION['login_id']) || !isset($_SESSION['designation']) || $_SESSION['designation']!='admin')
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// }
-
-
+}
 
 
 
+if(isset($_SESSION['duplicate']))
+{
 
+echo "<script type='text/javascript'>alert('User with that email already exists!');</script>";
+unset($_SESSION['duplicate']);
 
-// if(isset($_SESSION['duplicate']))
-// {
+}
 
-// echo "<script type='text/javascript'>alert('User with that email already exists!');</script>";
-// unset($_SESSION['duplicate']);
-
-// }
-
-// if(isset($_SESSION['unable']))
-// {
+if(isset($_SESSION['unable']))
+{
     
-//     if($_SESSION['unable']==1)
-//             {
+    if($_SESSION['unable']==1)
+            {
                 
-//                 echo "<script type='text/javascript'>alert('Name, email or password cant be empty!');</script>";
+                echo "<script type='text/javascript'>alert('Name, email or password cant be empty!');</script>";
                 
 
-//             }
+            }
 
-//     if($_SESSION['unable']==0)
-//             {
+    if($_SESSION['unable']==0)
+            {
                 
                 
-//                 echo "<script type='text/javascript'>alert('Employee has been created successfully!');</script>";
+                echo "<script type='text/javascript'>alert('Employee has been created successfully!');</script>";
 
-//             }        
-
-
-//             unset($_SESSION['unable']);
-
-// }
+            }        
 
 
+            unset($_SESSION['unable']);
 
+}
+
+
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
+
+$sql="SELECT name from employee WHERE id=:id";
+
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
 
 
 
@@ -65,13 +71,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fairway Pharmaceuticals | The Right choice </title>
-    <script src="./js/jquery.js"></script>
-    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./css/Material+Icons.css">
-    <link rel="stylesheet" href="./css/material.indigo-pink.min.css">
-    <script defer src="./js/material.min.js"></script>
-    <link rel="stylesheet" href="./css/material-design-iconic-font.min.css"/>
-    <link rel="stylesheet" href="./css/components.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/components.css">
 
 </head>
 <body style="background: linear-gradient(to right, #93EDC7,#dae2f8)">
@@ -80,11 +85,13 @@
                   <div class="mdl-layout__header-row">
                     <!-- Title -->
                     <span class="mdl-layout-title">Fairway</span>
+                      <span style="position: absolute;top:40px;">Hello <?=$_SESSION['user_name']?>!</span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                       <a class="mdl-navigation__link" href="admin.php"><i class="zmdi zmdi-home zmdi-hc-lg"></i> Dashboard</a>
+                  <!--     <a class="mdl-navigation__link" href="issueMedicine.php"><i class="zmdi zmdi-hospital-alt zmdi-hc-lg"></i> Issue Medicine</a> -->
                       <a class="mdl-navigation__link" href="addOffer.php"><i class="zmdi zmdi-cake zmdi-hc-lg"></i> Add Offer </a>
                       <a class="mdl-navigation__link" href="createEmployee.php"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i> Creat Employee</a>
                       <a class="mdl-navigation__link" href="reports.php"><i class="zmdi zmdi-chart zmdi-hc-lg"></i> Reports</a>
@@ -94,8 +101,10 @@
                 </header>
                 <div class="mdl-layout__drawer">
                   <span class="mdl-layout-title">Fairway</span>
+
                   <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="admin.php"><i class="zmdi zmdi-home zmdi-hc-lg"></i>&nbsp;Dashboard</a>
+              <!--       <a class="mdl-navigation__link" href="issueMedicine.php"><i class="zmdi zmdi-hospital-alt zmdi-hc-lg"></i> Issue Medicine</a> -->
                     <a class="mdl-navigation__link" href="addOffer.php"><i class="zmdi zmdi-cake zmdi-hc-lg"></i>&nbsp;Add Offer </a>
                     <a class="mdl-navigation__link" href="createEmployee.php"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i>&nbsp;Create Employee</a>
                     <a class="mdl-navigation__link" href="reports.php"><i class="zmdi zmdi-chart zmdi-hc-lg"></i>&nbsp;Reports</a> <hr/>
@@ -104,7 +113,7 @@
                 </div>
                 <main class="mdl-layout__content">
                   <div class="page-content">
-                    <center> <h4 class="form-heading">Create New Employee / (User)</h4> </center>
+                    <center> <h4 class="form-heading">Create New Employee (User)</h4> </center>
                     <div class="form-container">
 
 
@@ -118,7 +127,7 @@
                                                 <option disabled selected>Designation</option>
                                                 <option value="Regional Manager">Regional Manager</option>
                                                 <option value="Medical Representative">Medical Representative</option>
-                                                <option value="Offer Visitor">Offer Visitor</option>
+                                                <option value="Medical Representative">Offer Visitor</option>
                                             </select>
                                         </span> <br>
                                         <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -147,7 +156,7 @@
                                         </span> <br>
                                         <label class="" for="offerImage">Upload Any ID :</label>                              
                                         <span class="mdl-textfield mdl-js-textfield">
-                                        <input class="mdl-textfield__input" type="file"  accept="image/*" id="idImage" value=" " name="x9">
+                                        <input class="mdl-textfield__input" type="file"  accept="image/*" id="idImage" value="empty" name="x9">
                                         </span> <br>
                                         <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                 <input class="mdl-textfield__input" type="text"  id="remarks" value=" " name="x10">

@@ -1,15 +1,27 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['login_id']))
-// {
+if(!isset($_SESSION['login_id']))
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// }
+}
 
+
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
+
+$sql="SELECT name from employee WHERE id=:id";
+
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
 
 
 
@@ -27,6 +39,7 @@
     <link rel="stylesheet" href="./css/Material+Icons.css">
     <link rel="stylesheet" href="./css/material.indigo-pink.min.css">
     <script defer src="./js/material.min.js"></script>
+    <script src="./js/jquery.js"></script>
     <link rel="stylesheet" href="./css/material-design-iconic-font.min.css"/>
     <link rel="stylesheet" href="./css/components.css">
     
@@ -217,6 +230,7 @@ background-color: #A1BEB4;
                   <div class="mdl-layout__header-row">
                     <!-- Title -->
                     <span class="mdl-layout-title">Fairway</span>
+                      <span style="position: absolute;top:40px;">Hello <?=$_SESSION['user_name']?>!</span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
@@ -327,7 +341,7 @@ $(document).ready(function(){
 
           $.ajax({
 
-                url:'backend/fetch_offer.php',
+                url:'backend/offer.php',
                 method:'POST',
                 success:function(data){
 
@@ -345,52 +359,52 @@ $(document).ready(function(){
 
 
 
-fetch_offer1();
+// fetch_offer1();
 
-      function fetch_offer1(){
-
-
-          $.ajax({
-
-                url:'backend/fetch_offer1.php',
-                method:'POST',
-                success:function(data){
-
-                    $('#runningO1').html(data);  
-
-                    }
-
-                 })
-
-              }
+//       function fetch_offer1(){
 
 
-      setInterval(function(){fetch_offer1();},1000);       
+//           $.ajax({
+
+//                 url:'backend/fetch_offer1.php',
+//                 method:'POST',
+//                 success:function(data){
+
+//                     $('#runningO1').html(data);  
+
+//                     }
+
+//                  })
+
+//               }
 
 
-      today_sale();
+//       setInterval(function(){fetch_offer1();},1000);       
 
- function today_sale(){
 
-          $.ajax({
+//       today_sale();
 
-            url:'backend/todays_sale.php',
-            method:'POST',
-            success:function(data){
+//  function today_sale(){
 
-              $('#todaysale').html(data);
+//           $.ajax({
+
+//             url:'backend/todays_sale.php',
+//             method:'POST',
+//             success:function(data){
+
+//               $('#todaysale').html(data);
 
               
-            }
+//             }
 
 
 
 
-          })
+//           })
 
 
             
-              }
+//               }
 
 
  //setInterval(function(){today_sale();},1000);  
@@ -408,27 +422,27 @@ fetch_offer1();
 
 
 
-fetch_users();
+// fetch_users();
 
-      function fetch_users(){
-
-
-          $.ajax({
-
-                url:'backend/fetch_active_user.php',
-                method:'POST',
-                success:function(data){
-
-                    $('#activeUsers').html(data);  
-
-                    }
-
-                 })
-
-              }
+//       function fetch_users(){
 
 
-       setInterval(function(){fetch_users();},30000);   
+//           $.ajax({
+
+//                 url:'backend/fetch_active_user.php',
+//                 method:'POST',
+//                 success:function(data){
+
+//                     $('#activeUsers').html(data);  
+
+//                     }
+
+//                  })
+
+//               }
+
+
+//        setInterval(function(){fetch_users();},30000);   
 
 
 

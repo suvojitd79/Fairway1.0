@@ -1,5 +1,35 @@
 <?php
+session_start();
 
+if(!isset($_SESSION['login_id']))
+{
+
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
+
+}
+
+
+if($_SESSION['designation']!='Offer Visitor')
+{
+
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
+
+}
+
+
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
+
+$sql="SELECT name from employee WHERE id=:id";
+
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
 
 ?>
 
@@ -154,7 +184,7 @@ $(document).ready(function(){
           $.ajax({
 
 
-            url:'backend/fetch_offer.php',
+            url:'backend/offer.php',
             method:'POST',
             success:function(data){
 
@@ -173,27 +203,27 @@ $(document).ready(function(){
 
 
 
-fetch_offer1();
+// fetch_offer1();
 
-      function fetch_offer1(){
-
-
-          $.ajax({
-
-                url:'backend/fetch_offer1.php',
-                method:'POST',
-                success:function(data){
-
-                    $('#offer_content1').html(data);  
-
-                    }
-
-                 })
-
-              }
+//       function fetch_offer1(){
 
 
-      setInterval(function(){fetch_offer1();},1000);       
+//           $.ajax({
+
+//                 url:'backend/fetch_offer1.php',
+//                 method:'POST',
+//                 success:function(data){
+
+//                     $('#offer_content1').html(data);  
+
+//                     }
+
+//                  })
+
+//               }
+
+
+//       setInterval(function(){fetch_offer1();},1000);       
   
 
 

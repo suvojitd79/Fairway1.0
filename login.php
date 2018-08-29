@@ -1,104 +1,124 @@
 <?php
-// session_start();
+session_start();
 
-// if(isset($_SESSION['designation']))
-// {
+if(isset($_SESSION['designation']))
+{
 
-// if($_SESSION['designation']=='admin')
-// {
+if($_SESSION['designation']=='admin')
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/admin.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/admin.php');
+exit();
 
-// }
+}
 
-// if($_SESSION['designation']=='Regional Manager')
-// {
-// header('Location:http://fairwaypharmaceuticlas.com/rm.php');
-// exit();
+if($_SESSION['designation']=='Regional Manager')
+{
+header('Location:http://localhost/Fairway1.1/FairwayVerified/rm.php');
+exit();
 
-// }
+}
 
-// if($_SESSION['designation']=='Medical Representative')
-// {
-// header('Location:http://fairwaypharmaceuticlas.com/user.php');
-// exit();
+if($_SESSION['designation']=='Medical Representative')
+{
+header('Location:http://localhost/Fairway1.1/FairwayVerified/user.php');
+exit();
 
-// }
+}
 
+if($_SESSION['designation']=='Offer Visitor')
+{
+header('Location:http://localhost/Fairway1.1/FairwayVerified/offervisitor.php');
+exit();
 
-// }
-
-
-
-// if(!isset($_SESSION['toggle']))
-// {
-
-// $_SESSION['error']='';
-
-// }
-// else{
-
-// unset($_SESSION['toggle']);
-
-// }
+}
 
 
 
-// if(isset($_POST['login_submit']))
-// {
-
-// $email=strip_tags($_POST['email']);
-// $password=filter_var(strip_tags($_POST['password']),FILTER_SANITIZE_EMAIL) ;
-
-// $pdo = new PDO('mysql:host=107.180.50.162;dbname=fairPharmDB','fairPharmDBUser','h%XJQY-)J-E['); 
-// $sql = "SELECT id,designation FROM employee where email=:email and password=:password";
-// $stl=$pdo->prepare($sql);
-// $stl->execute(array('email'=>$email,'password'=>$password));
-// $row=$stl->fetch(PDO::FETCH_ASSOC);
-
-// if(!$row)
-// {
-// $_SESSION['toggle']=1;  
-// $_SESSION['error']='Please check your email or password!';
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
-// }
-// else{
-
-// if($row['designation']=='admin')
-// {
-
-// $_SESSION['login_id']=$row['id'];
-// $_SESSION['designation']='admin';
-// header('Location:http://fairwaypharmaceuticlas.com/admin.php');
-// exit();
-
-// }
-
-// if($row['designation']=='Regional Manager')
-// {
-// $_SESSION['login_id']=$row['id'];
-// $_SESSION['designation']='Regional Manager';
-// header('Location:http://fairwaypharmaceuticlas.com/rm.php');
-// exit();
-
-// }
-
-// if($row['designation']=='Medical Representative')
-// {
-// $_SESSION['login_id']=$row['id'];
-// $_SESSION['designation']='Medical Representative';
-// header('Location:http://fairwaypharmaceuticlas.com/user.php');
-// exit();
-
-// }
+}
 
 
-// }
+
+if(!isset($_SESSION['toggle']))
+{
+
+$_SESSION['error']='';
+
+}
+else{
+
+unset($_SESSION['toggle']);
+
+}
 
 
-// }
+
+if(isset($_POST['login_submit']))
+{
+
+$email=strip_tags($_POST['email']);
+$password=filter_var(strip_tags($_POST['password']),FILTER_SANITIZE_EMAIL);
+
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
+
+$sql = "SELECT id,designation,status FROM employee where email=:email and password=:password and status=:status";
+$stl=$pdo->prepare($sql);
+$stl->execute(array('email'=>$email,'password'=>$password,'status'=>'Active'));
+$row=$stl->fetch(PDO::FETCH_ASSOC);
+
+if(!$row)
+{
+$_SESSION['toggle']=1;  
+$_SESSION['error']='Please check your email or password!';
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
+}
+else{
+
+if($row['designation']=='admin')
+{
+
+$_SESSION['login_id']=$row['id'];
+$_SESSION['designation']='admin';
+header('Location:http://localhost/Fairway1.1/FairwayVerified/admin.php');
+exit();
+
+}
+
+if($row['designation']=='Regional Manager')
+{
+$_SESSION['login_id']=$row['id'];
+$_SESSION['designation']='Regional Manager';
+header('Location:http://localhost/Fairway1.1/FairwayVerified/rm.php');
+exit();
+
+}
+
+if($row['designation']=='Medical Representative')
+{
+$_SESSION['login_id']=$row['id'];
+$_SESSION['designation']='Medical Representative';
+header('Location:http://localhost/Fairway1.1/FairwayVerified/user.php');
+exit();
+
+}
+
+if($row['designation']=='Offer Visitor')
+{
+$_SESSION['login_id']=$row['id'];
+$_SESSION['designation']='Offer Visitor';
+header('Location:http://localhost/Fairway1.1/FairwayVerified/offervisitor.php');
+exit();
+
+}
+
+
+
+
+}
+
+
+}
 
 
 

@@ -1,14 +1,14 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['login_id']))
-// {
+if(!isset($_SESSION['login_id']))
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// }
+}
 
 
 
@@ -286,7 +286,7 @@ background-color: #A1BEB4;
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                       <a class="mdl-navigation__link" href="admin.php"><i class="zmdi zmdi-home zmdi-hc-lg"></i> Dashboard</a>
                       <a class="mdl-navigation__link" href="addOffer.php"><i class="zmdi zmdi-cake zmdi-hc-lg"></i> Add Offer </a>
-                      <a class="mdl-navigation__link" href="createEmployee.php"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i> Create Employee</a>
+                    <a class="mdl-navigation__link" href="createEmployee.php" id="cemp"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i> Create Employee</a>
                       <a class="mdl-navigation__link" href="reports.php"><i class="zmdi zmdi-chart zmdi-hc-lg"></i> Reports</a>
                       <a class="mdl-navigation__link" href="backend/logout.php"><i class="zmdi zmdi-lock-open zmdi-hc-lg"></i> Logout</a>
                     </nav>
@@ -297,7 +297,7 @@ background-color: #A1BEB4;
                   <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="admin.php"><i class="zmdi zmdi-home zmdi-hc-lg"></i>&nbsp;Dashboard</a>
                     <a class="mdl-navigation__link" href="addOffer.php"><i class="zmdi zmdi-cake zmdi-hc-lg"></i>&nbsp;Add Offer </a>
-                    <a class="mdl-navigation__link" href="createEmployee.php"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i>&nbsp;Create Employee</a>
+                    <a class="mdl-navigation__link" href="createEmployee.php" id="cemp"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i>&nbsp;Create Employee</a>
                     <a class="mdl-navigation__link" href="reports.php"><i class="zmdi zmdi-chart zmdi-hc-lg"></i>&nbsp;Reports</a> <hr/>
                     <a class="mdl-navigation__link" href="backend/logout.php"><i class="zmdi zmdi-lock-open zmdi-hc-lg"></i>&nbsp;&nbsp;Logout</a>
                   </nav>
@@ -364,7 +364,7 @@ background-color: #A1BEB4;
 
           $.ajax({
 
-                url:'backend/fetch_active_user_report.php',
+                url:'backend/fetch_all_emp.php',
                 method:'POST',
                 success:function(data){
 
@@ -384,30 +384,30 @@ background-color: #A1BEB4;
 
 
 
-         fetch_sales_report();
+         // fetch_sales_report();
 
 
-         function fetch_sales_report()
-          {
+         // function fetch_sales_report()
+         //  {
 
-            $.ajax({
+         //    $.ajax({
 
-              url:'backend/fetch_sales.php',
-              method:'POST',
-              success:function(data){
+         //      url:'backend/fetch_sales.php',
+         //      method:'POST',
+         //      success:function(data){
 
-                    $('#sales').html(data);
-
-
-                        }
+         //            $('#sales').html(data);
 
 
-
-                  });
+         //                }
 
 
 
-          }
+         //          });
+
+
+
+         //  }
 
 
          // setInterval(function(){fetch_sales_report();},30000);
@@ -415,30 +415,30 @@ background-color: #A1BEB4;
 
 
 
-         fetch_stock_report();
+         // fetch_stock_report();
 
 
-         function fetch_stock_report()
-          {
+         // function fetch_stock_report()
+         //  {
 
-            $.ajax({
+         //    $.ajax({
 
-              url:'backend/fetch_stock.php',
-              method:'POST',
-              success:function(data){
+         //      url:'backend/fetch_stock.php',
+         //      method:'POST',
+         //      success:function(data){
 
-                    $('#stock').html(data);
-
-
-                        }
+         //            $('#stock').html(data);
 
 
-
-                  });
+         //                }
 
 
 
-          }
+         //          });
+
+
+
+         //  }
 
 
  //setInterval(function(){fetch_stock_report();},1000);

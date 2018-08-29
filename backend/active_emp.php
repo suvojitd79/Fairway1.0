@@ -7,7 +7,7 @@ if(isset($_POST['pass_submit'])){
 $email=filter_var(strip_tags($_POST['email']),FILTER_SANITIZE_EMAIL);
 
 
-$pdo = new PDO('mysql:host=107.180.50.162;dbname=fairPharmDB','fairPharmDBUser','h%XJQY-)J-E['); 
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
 
 $sql="SELECT id from employee WHERE email=:email"; 
 
@@ -21,7 +21,7 @@ $data=$sqlm->fetch();
 if(empty($data))
 {
 	$_SESSION['active_emp'] = 0;
-	header('Location:http://fairwaypharmaceuticlas.com/admin.php');
+	header('Location:http://localhost/Fairway1.1/FairwayVerified/admin.php');
 	exit();
 	
 }
@@ -36,7 +36,7 @@ $sqlm1->execute(array('status'=>'Active','id'=>$data['id']));
 
 $_SESSION['active_emp'] = 1;
 
-header('Location:http://fairwaypharmaceuticlas.com/admin.php');
+header('Location:http://localhost/Fairway1.1/FairwayVerified/admin.php');
 exit();
 
 }

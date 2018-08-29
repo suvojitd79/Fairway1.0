@@ -1,54 +1,64 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['login_id']))
-// {
+if(!isset($_SESSION['login_id']))
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// }
+}
 
-// if (isset($_SESSION['del_emp'])) {
+if($_SESSION['designation']!='admin')
+{
+
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
+
+}
+
+
+
+if (isset($_SESSION['del_emp'])) {
       
 
-//       if($_SESSION['del_emp']==0)
-//           {
-//             echo "<script>alert('Wrong email!');</script>";
+      if($_SESSION['del_emp']==0)
+          {
+            echo "<script>alert('Wrong email!');</script>";
 
-//           }
+          }
 
-//       if($_SESSION['del_emp']==1)
-//           {
-//             echo "<script>alert('Employee profile has been deleted!');</script>";
+      if($_SESSION['del_emp']==1)
+          {
+            echo "<script>alert('Employee profile has been deleted!');</script>";
 
-//           }
+          }
           
-//           unset($_SESSION['del_emp']);
+          unset($_SESSION['del_emp']);
 
 
-// }
+}
 
-// if (isset($_SESSION['active_emp'])) {
+if (isset($_SESSION['active_emp'])) {
       
 
-//       if($_SESSION['active_emp']==0)
-//           {
-//             echo "<script>alert('Wrong email!');</script>";
+      if($_SESSION['active_emp']==0)
+          {
+            echo "<script>alert('Wrong email!');</script>";
 
-//           }
+          }
 
-//       if($_SESSION['active_emp']==1)
-//           {
-//             echo "<script>alert('Employee profile has been actived!');</script>";
+      if($_SESSION['active_emp']==1)
+          {
+            echo "<script>alert('Employee profile has been actived!');</script>";
 
-//           }
+          }
           
-//           unset($_SESSION['active_emp']);
+          unset($_SESSION['active_emp']);
 
 
-// }
+}
 
 
 
@@ -65,6 +75,7 @@
     <title>Fairway Pharmaceuticals | The Right choice </title>
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./css/Material+Icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/material.indigo-pink.min.css">
     <script defer src="./js/material.min.js"></script>
     <link rel="stylesheet" href="./css/material-design-iconic-font.min.css"/>
@@ -257,6 +268,7 @@ background-color: #A1BEB4;
                   <div class="mdl-layout__header-row">
                     <!-- Title -->
                     <span class="mdl-layout-title">Fairway</span>
+                    <span style="position: absolute;top:40px;">Admin Panel</span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation. We hide it in small screens. -->
@@ -306,16 +318,10 @@ background-color: #A1BEB4;
                                 </div>
                                 
 
-
-
            <br>                             
   
                               
-                                
-
-
-
-
+                              
 
                         </div>
                          
@@ -383,7 +389,7 @@ $(document).ready(function(){
 
           $.ajax({
 
-                url:'backend/fetch_offer.php',
+                url:'backend/offer.php',
                 method:'POST',
                 success:function(data){
 
@@ -401,59 +407,33 @@ $(document).ready(function(){
 
 
 
-fetch_offer1();
 
-      function fetch_offer1(){
+ //      today_sale();
 
+ // function today_sale(){
 
-          $.ajax({
+ //          $.ajax({
 
-                url:'backend/fetch_offer1.php',
-                method:'POST',
-                success:function(data){
+ //            url:'backend/todays_sale.php',
+ //            method:'POST',
+ //            success:function(data){
 
-                    $('#runningO1').html(data);  
-
-                    }
-
-                 })
-
-              }
-
-
-      setInterval(function(){fetch_offer1();},1000);       
-
-
-      today_sale();
-
- function today_sale(){
-
-          $.ajax({
-
-            url:'backend/todays_sale.php',
-            method:'POST',
-            success:function(data){
-
-              $('#todaysale').html(data);
+ //              $('#todaysale').html(data);
 
               
-            }
+ //            }
 
 
 
 
-          })
+ //          })
 
 
             
-              }
+ //              }
 
 
  //setInterval(function(){today_sale();},1000);  
-
-
-
-
 
 
 

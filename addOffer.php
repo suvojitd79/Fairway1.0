@@ -1,56 +1,64 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(isset($_SESSION['unable_pro']))
-// {
+
+if(!isset($_SESSION['login_id']))
+{
+
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
+
+}
+
+
+if($_SESSION['designation']=='Offer Visitor' || $_SESSION['designation']=='Medical Representative')
+{
+
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
+
+}
+
+
+
+
+if(isset($_SESSION['unable_offer']))
+{
     
-//     if($_SESSION['unable_pro']==1)
-//             {
+    if($_SESSION['unable_offer']==1)
+            {
                 
-//                 echo "<script type='text/javascript'>alert('Plese fill out all the fields!');</script>";
-                
-
-//             }
-
-//     if($_SESSION['unable_pro']==0)
-//             {
-                
-                
-//                 echo "<script type='text/javascript'>alert('Product offer has been created successfully!');</script>";
-
-//             }        
-
-
-//             unset($_SESSION['unable_pro']);
-
-// }
-
-
-// if(isset($_SESSION['unable_pro_med']))
-// {
-    
-//     if($_SESSION['unable_pro_med']==1)
-//             {
-                
-//                 echo "<script type='text/javascript'>alert('Plese fill out all the fields!');</script>";
+                echo "<script type='text/javascript'>alert('Plese fill out all the fields!');</script>";
                 
 
-//             }
+            }
 
-//     if($_SESSION['unable_pro_med']==0)
-//             {
+    if($_SESSION['unable_offer']==0)
+            {
                 
                 
-//                 echo "<script type='text/javascript'>alert('Medicine offer has been created successfully!');</script>";
+                echo "<script type='text/javascript'>alert('Offer offer has been created successfully!');</script>";
 
-//             }        
+            }        
 
 
-//             unset($_SESSION['unable_pro_med']);
+            unset($_SESSION['unable_offer']);
 
-// }
+}
 
+
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
+
+$sql="SELECT name from employee WHERE id=:id";
+
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
 
 
 
@@ -70,6 +78,7 @@
     <script defer src="./js/material.min.js"></script>
     <link rel="stylesheet" href="./css/material-design-iconic-font.min.css"/>
     <link rel="stylesheet" href="css/components.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body style="background: linear-gradient(to right, #77a1d3, #79cbca, #e684ae);">
@@ -78,6 +87,7 @@
             <div class="mdl-layout__header-row">
               <!-- Title -->
               <span class="mdl-layout-title">Fairway</span>
+               <span style="position: absolute;top:40px;">Hello <?=$_SESSION['user_name']?>!</span>
               <!-- Add spacer, to align navigation to the right -->
               <div class="mdl-layout-spacer"></div>
               <!-- Navigation. We hide it in small screens. -->
@@ -86,7 +96,7 @@
                 <a class="mdl-navigation__link" href="addOffer.php"><i class="zmdi zmdi-cake zmdi-hc-lg"></i> Add Offer </a>
                 <a class="mdl-navigation__link" href="createEmployee.php"><i class="zmdi zmdi-account-add zmdi-hc-lg"></i> Creat Employee</a>
                 <a class="mdl-navigation__link" href="reports.php"><i class="zmdi zmdi-chart zmdi-hc-lg"></i> Reports</a>
-                <a class="mdl-navigation__link" href="logout.php"><i class="zmdi zmdi-lock-open zmdi-hc-lg"></i> Logout</a>
+                <a class="mdl-navigation__link" href="backend/logout.php"><i class="zmdi zmdi-lock-open zmdi-hc-lg"></i> Logout</a>
               </nav>
             </div>
           </header>
@@ -113,14 +123,14 @@
                     </span> <br>
                     <span class="mdl-textfield mdl-js-textfield">
                       <select class="mdl-textfield__input" id="medicineName-1" name="x2">
-                        <option disabled selected>Offer Valid on</option>
+                        <!-- <option disabled selected>Offer Valid on</option> -->
                         <!-- join Name of Product and Unit of the product and show here  -->
-                        <option value="Rebose-20 (Tablets)">Rebose-20 (Tablets)</option>
+                      <!--   <option value="Rebose-20 (Tablets)">Rebose-20 (Tablets)</option>
                         <option value="Rebose-L (Capsules)">Rebose-L (Capsules)</option>
                         <option value="Rebose-D (Capsules)">Rebose-D (Capsules)</option>
                         <option value="Rosek-Plus (Injection)">Rosek-Plus (Injection)</option>
                         <option value="Rosek-200 ml (Syrup)">Rosek-200 ml (Syrup)</option>
-                        <option value="Skinax (Cream)">Skinax (Cream)</option>
+                        <option value="Skinax (Cream)">Skinax (Cream)</option> -->
 
                       </select>
                 </span> <br>
@@ -130,22 +140,22 @@
                     <input class="mdl-textfield__input" type="file"  accept="image/*" id="offerImage" name="x3">
                   </span> <br>
                   <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <input class="mdl-textfield__input" type="number"  id="quantity" name="x8">
+                      <input class="mdl-textfield__input" type="number"  id="quantity" name="x4">
                       <label class="mdl-textfield__label" for="quantity">On Sale of (Quantity) </label>
                   </span> <br>
                   <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="number"  id="freeMedicine" name="x9">
+                    <input class="mdl-textfield__input" type="number"  id="freeMedicine" name="x5">
                     <label class="mdl-textfield__label" for="freeMedicine">Number of Medicine Free </label>
                 </span> <br>
 
                   <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <textarea name="x4" class="mdl-textfield__input" type="text" rows= "3" id="description" ></textarea>
+                      <textarea name="x6" class="mdl-textfield__input" type="text" rows= "3" id="description" ></textarea>
                       <label class="mdl-textfield__label" for="description">Offer's Description</label>
                       </span> <br>
 
                   <label for="validity">Validity : </label> 
                   <span class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="date"  id="validity" name="x5">
+                    <input class="mdl-textfield__input" type="date"  id="validity" name="x7">
                     </span><br> <br>
 
                   <span class="mdl-textfield mdl-js-textfield"> 
@@ -233,6 +243,49 @@ function productOffer(){
 
 
 </script>
+
+
+ <script type="text/javascript">
+              
+              $(document).ready(function(){
+
+
+
+              function fetch_med(){
+
+            $.ajax({
+
+                url:'backend/fetch_medicine.php',
+                method:'POST',
+                success:function(data)
+                    {
+
+                        $('#medicineName-1').html("<option disabled selected>Offer Valid on</option>"+data);
+
+                    }
+
+
+            });
+
+                }
+
+                fetch_med();
+
+
+
+
+
+
+
+
+
+
+
+
+              });
+
+
+           </script>   
 
 </body>
 </html>

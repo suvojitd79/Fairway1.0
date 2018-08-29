@@ -1,51 +1,51 @@
 <?php
 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['login_id']))
-// {
+if(!isset($_SESSION['login_id']))
+{
 
-// header('Location:http://fairwaypharmaceuticlas.com/login.php');
-// exit();
+header('Location:http://localhost/Fairway1.1/FairwayVerified/login.php');
+exit();
 
-// }
+}
 
-// $pdo = new PDO('mysql:host=107.180.50.162;dbname=fairPharmDB','fairPharmDBUser','h%XJQY-)J-E['); 
-
-
-// $sql="SELECT name from employee WHERE id=:id";
-
-// $sqlm=$pdo->prepare($sql);
-
-// $sqlm->execute(array('id'=>$_SESSION['login_id']));
-
-// $row=$sqlm->fetch();
-
-// $_SESSION['user_name']=$row['name'];
+$pdo = new PDO('mysql:host=localhost;dbname=fairway','root',''); 
 
 
-// if(isset($_SESSION['succ_travel']))
-//    {
+$sql="SELECT name from employee WHERE id=:id";
+
+$sqlm=$pdo->prepare($sql);
+
+$sqlm->execute(array('id'=>$_SESSION['login_id']));
+
+$row=$sqlm->fetch();
+
+$_SESSION['user_name']=$row['name'];
 
 
-//     if($_SESSION['succ_travel']==1)
-//     {
-
-//         echo "<script>alert('All the fields must be filled!');</script>";
-
-//     }
-//     if($_SESSION['succ_travel']==0)
-//     {
-
-//         echo "<script>alert('Data Has been stored!');</script>";
+if(isset($_SESSION['succ_travel']))
+   {
 
 
-//     }
+    if($_SESSION['succ_travel']==1)
+    {
 
-//     unset($_SESSION['succ_travel']);
+        echo "<script>alert('All the fields must be filled!');</script>";
+
+    }
+    if($_SESSION['succ_travel']==0)
+    {
+
+        echo "<script>alert('Data Has been stored!');</script>";
 
 
-//    } 
+    }
+
+    unset($_SESSION['succ_travel']);
+
+
+   } 
 
 
 
@@ -119,25 +119,25 @@
                         <input class="mdl-textfield__input" type="text"  id="to" name="x3">
                         <label class="mdl-textfield__label" for="to">To</label>
                     </span> <br>
-                    <span class="mdl-textfield mdl-js-textfield">
-                         <input type="radio" name="office" value="Headquarter" checked> HQ
-                         <input type="radio" name="office" value="Ex-Headquarter"> Ex-HQ
-                         <input type="radio" name="office" value="Out Station"> Out Station  
+                    <span class="mdl-textfield mdl-js-textfield" >
+                         <input type="radio" name="x4" value="Headquarter" checked> HQ
+                         <input type="radio" name="x4" value="Ex-Headquarter"> Ex-HQ
+                         <input type="radio" name="x4" value="Out Station"> Out Station  
                   </span> <br>
                     <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="number"  id="distance" name="x4">
+                        <input class="mdl-textfield__input" type="number"  id="distance" name="x5">
                         <label class="mdl-textfield__label" for="distance">Distance in K.M.</label>
                     </span> <br>
                     <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="number"  id="fare">
+                        <input class="mdl-textfield__input" type="number"  id="fare" name="x6">
                         <label class="mdl-textfield__label" for="fare">Fare per KM (&#8377)</label>
                     </span> <br>
                     <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="number"  id="DA">
+                        <input class="mdl-textfield__input" type="number"  id="DA" name="x7">
                         <label class="mdl-textfield__label" for="DA">DA of the trip</label>
                     </span> <br>
                     <span class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text"  id="remarks" name="x5">
+                        <input class="mdl-textfield__input" type="text"  id="remarks" name="x8">
                         <label class="mdl-textfield__label" for="remarks">Remarks (if any)</label>
                     </span> <br> <br>
                     <span class="mdl-textfield mdl-js-textfield"> 
@@ -157,12 +157,12 @@
                     Travel To :<p class="displayData" id="showTo"></p>
                     Origin Office : <p class="displayData" id="showOffice"></p>
                     Total Distance (K.M.) :<p class="displayData" id="showDistance"></p>
-                    Total Expense (TA + DA) : <p class="displayData" id="showTotal" ></p>
-                    Remarks :<p class="displayData" id="showRemarks"></p> 
+                    Total Expense (TA + DA) : <p class="displayData" id="showTotal"></p></p>
+                    Remarks : <p class="displayData" id="showRemarks"></p></p>
                   </div>
                   <div class="mdl-dialog__actions">
                         <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab close"><i class="material-icons">clear </i></button>                    
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons" id="travel_submit_">done_outline</i></button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" id="tra_sub"><i class="material-icons" id="travel_submit_">done_outline</i></button>
                   </div>
                 </dialog>
 
@@ -170,6 +170,22 @@
     </div>
     </main>
 </div>
+
+
+            <script src="js/user.js"></script>
+
+
+<script type="text/javascript">
+    
+
+    $('#tra_sub').click(function(){
+
+       
+         $("#travel_submit").click();
+
+     });
+
+</script>
 <script>
 function travelDataSubmit(){
     var dialog = document.querySelector('dialog');
@@ -180,42 +196,26 @@ function travelDataSubmit(){
     dialog.querySelector('.close').addEventListener('click', function() {
         dialog.close()});
     
-    var distace = document.getElementById("distance").value
+    var distance = document.getElementById("distance").value;
     var fare = document.getElementById('fare').value;
     var TA = (fare*distance);
     var DA = document.getElementById('DA').value;
-    const total = ( TA + DA );
+    var total = ( parseInt(TA)+ parseInt(DA) );
     
     document.getElementById('showTravelDate').innerHTML = document.getElementById("issueDate").value;
     document.getElementById('showFrom').innerHTML = document.getElementById("from").value;     
     document.getElementById('showTo').innerHTML = document.getElementById("to").value;     
     document.getElementById('showOffice').innerHTML = document.querySelector('input[name="office"]:checked').value;
     document.getElementById('showDistance').innerHTML = document.getElementById("distance").value;
-    document.getElementById('showTotal').innerHTML = total;
+    document.getElementById('showTotal').innerHTML = "<p>"+total+"</p>";
     document.getElementById('showRemarks').innerHTML = document.getElementById("remarks").value;     
-    console.log("TA is : "+ TA);
-    console.log("DA is : "+ DA);
-    console.log ("Total is : " + total);
+    // console.log("TA is : "+ TA);
+    // console.log("DA is : "+ DA);
+    // console.log ("Total is : " + total);
 };
     
 
 </script>
-
-            <script src="js/user.js"></script>
-
-
-<script type="text/javascript">
-    
-
-    // $('#travel_submit_').click(function(){
-
-       
-    //     $("#travel_submit").click();
-
-    // });
-
-</script>
-
 
 
 </body>
